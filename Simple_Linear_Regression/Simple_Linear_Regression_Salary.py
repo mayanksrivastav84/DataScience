@@ -1,7 +1,7 @@
 #Importing Libraries 
 import pandas as pd 
 import numpy as np 
-import matplotlib as mp
+import matplotlib.pyplot as mp
 
 
 #Import Dataset 
@@ -12,7 +12,7 @@ y = data.iloc[:, 1:2]
 
 #Split into train and test 
 from sklearn.cross_validation import train_test_split 
-xtrain, xtrest, ytrain, ytest = train_test_split(x,y, test_size = 0.2, random_state = 0)
+xtrain, xtest, ytrain, ytest = train_test_split(x,y, test_size = 1/3, random_state = 0)
 
 
 
@@ -23,4 +23,21 @@ regressor.fit(xtrain,ytrain)
 regressor.score(xtrain,ytrain)
 
 #Predict Salary 
-ypred = regressor.predict(9.6)
+ypred = regressor.predict(xtrain)
+
+#Visualizing the Training Set Results 
+mp.scatter(xtrain, ytrain, color = 'red')
+mp.plot(xtrain, regressor.predict(xtrain), color = 'blue')
+mp.title('Salary vs Experience (Training DataSet)')
+mp.xlabel('Years of Experience')
+mp.ylabel('Salary')
+mp.show()
+
+#Visualizing the Test Set Results 
+mp.scatter(xtest, ytest, color = 'red')
+mp.plot(xtrain, regressor.predict(xtrain), color = 'blue')
+mp.title('Salary vs Experience (Training DataSet)')
+mp.xlabel('Years of Experience')
+mp.ylabel('Salary')
+mp.show()
+ 
