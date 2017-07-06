@@ -1,0 +1,31 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jul  6 17:14:25 2017
+
+@author: MB61QG
+"""
+
+#Import Libraries 
+import tweepy 
+import textblob 
+from textblob import TextBlob
+import csv
+import sys
+#Specify the credentials for twitter 
+from tweepy import OAuthHandler
+consumer_key = 'pi4scoHROrurup4jsTlf3ENP9'
+consumer_secret = 'c1rBZmqkJ8bFffTtXTF7yDwSKStV0FhuMzrKLbzEwut9jN4TS3'
+access_token = '842777358046281728-uTAkbeoVNQbvzDEawGqhpWvblEMJJ5s'
+access_secret = 'wl8JMJWzNBKKVpZcNxMt0nO5iTqo5VFKNDHuL9fHYLZDW'
+auth = OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_secret)
+api = tweepy.API(auth)
+
+new_tweets = api.user_timeline(screen_name = '@realdonaldTrump',count=10)
+
+
+for tweet in new_tweets:
+    print(tweet.text)
+    analysis = TextBlob(text)
+    print(analysis.sentiment)
+       
