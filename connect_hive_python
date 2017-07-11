@@ -1,0 +1,12 @@
+#This piece of code worked with Python2.7
+
+from pyhive import hive
+conn = hive.Connection(host="192.168.178.73", port=10000, username="cloudera")
+
+
+import pandas as pd
+df = pd.read_sql("SELECT text  FROM twitter.tweets", conn)
+
+#Apply textblob to Tweet for sentiment 
+from textblob import TextBlob
+df['sentiment'] = df['text'].apply(lambda tweet: TextBlob(tweet).sentiment)
