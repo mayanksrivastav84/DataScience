@@ -14,6 +14,8 @@ df = pd.read_csv('H:\Data\Data.csv')
 x  = df.iloc[:, :-1].values
 y  = df.iloc[:, 5:6].values
 
+#Count the number of claims and no Claims 
+count_of_claims = df.groupby('claim')['claim'].count()
 
 #Encoding categorical variables like age, bmi and gender
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
