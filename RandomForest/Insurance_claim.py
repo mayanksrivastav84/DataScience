@@ -1,3 +1,6 @@
+#This is the solution for the Super Data Science workshop on https://www.superdatascience.com/workshop-021-machine-learning-r-insurance-claims/
+#Have used Random Forest Classifier to predict wether the customer will claim or not.
+
 #Importing Libraries 
 import pandas as pd 
 import numpy as np 
