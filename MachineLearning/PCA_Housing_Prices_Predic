@@ -1,0 +1,75 @@
+#Importing Libraries 
+import pandas as pd 
+import numpy as np 
+import seaborn as sns 
+import matplotlib as plt 
+import sklearn
+
+#Import Dataset 
+df = pd.read_csv('train.csv')
+df1 = pd.read_csv('test.csv')
+
+#Select numerical data types 
+set(df.dtypes.tolist())
+dfnum = df.select_dtypes(include = ['float64', 'int64'])
+dfnum.info()
+
+dfnumtest = df1.select_dtypes(include = ['float64', 'int64'])
+
+
+xtrain = dfnum.iloc[:, :-1].values
+ytrain = dfnum.iloc[:, 37].values
+xtest = dfnumtest.iloc[:, 0:37].values
+
+
+#Handle missing values in Training Data Set 
+from sklearn.preprocessing import Imputer
+imputer = Imputer(missing_values = 'NaN', strategy = 'mean', axis = 0)
+imputer.fit(xtrain[:, 1:37])
+xtrain[:, 1:37] = imputer.transform(xtrain[:, 1:37])
+
+
+#Handle missing values in Test Data Set 
+from sklearn.preprocessing import Imputer
+imputer = Imputer(missing_values = 'NaN', strategy = 'mean', axis = 0)
+imputer.fit(xtest[:, 1:36])
+xtest[:, 1:36] = imputer.transform(xtest[:, 1:36])
+
+#Feature Scaling
+from sklearn.preprocessing import StandardScaler 
+sc_x = StandardScaler()
+xtrain = sc_x.fit_transform(xtrain)
+xtest = sc_x.transform(xtest)
+
+
+#Use PCA for feature extraction 
+from sklearn.decomposition import PCA 
+pca = PCA(n_components = 5)
+xtrain = pca.fit_transform(xtrain)
+explained_variance = pca.explained_variance_ratio_
+xtest = pca.fit_transform(xtest)
+
+
+#Fit Linear Regression Model 
+from sklearn.linear_model import LinearRegression 
+regressor = LinearRegression()
+regressor.fit(xtrain, ytrain)
+regressor.score(xtrain, ytrain)
+
+#Predict Value of the house
+ytrainpred = regressor.predict(xtrain)
+
+#Predict Value of the house on test data set 
+ytestpred = regressor.predict(xtest)
+
+#Fit Random Forest Regression 
+from sklearn.ensemble import RandomForestRegressor 
+rfregressor = RandomForestRegressor(n_estimators = 10, random_state = 0)
+rfregressor.fit(xtrain, ytrain)
+rfregressor.score(xtrain, ytrain)
+
+#Predict Value of the house
+rfytrainpred = rfregressor.predict(xtrain)
+
+#Predict Value of the house on test data set 
+rfytestpred = rfregressor.predict(xtest)
