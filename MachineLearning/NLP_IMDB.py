@@ -1,3 +1,5 @@
+#Source: https://www.kaggle.com/c/word2vec-nlp-tutorial/data
+
 import pandas as pd 
 import numpy as np
 import re 
