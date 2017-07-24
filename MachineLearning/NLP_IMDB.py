@@ -68,7 +68,7 @@ for i in range (0, 25000):
     ps = PorterStemmer()
     testreview = [ps.stem(word) for word in testreview if not word in stopwords.words('english')]
     testreview = ' '.join(testreview)
-    corpus.append(testreview)
+    testcorpus.append(testreview)
 
 testvectorizer = CountVectorizer(analyzer = "word",   
                              tokenizer = None,    
