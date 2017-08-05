@@ -1,2 +1,2 @@
 # DataScience
-Folder to share the codes created as part of my learning of Data Science
+This repository is dedicated to my work in the area of Machine Learning. Feel free to use the codes, if you want.
