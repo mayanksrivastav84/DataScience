@@ -29,11 +29,11 @@ testdata = testdata.drop(['Alley', 'FireplaceQu', 'PoolQC', 'Fence', 'MiscFeatur
 #On basis of EDA we did earlier, filter out the variable we want to use for predicting the sale price
 
 finaldata = traindata.filter([ 
-       'OverallQual',	'MSSubClass', 'KitchenAbvGr','GrLivArea', 'EnclosedPorch', 'GarageArea', 'OverallCond'	,'TotalBsmtSF', 'YearBuilt', 'SalePrice'], axis = 1)
+       'OverallQual',	'MSSubClass', 'KitchenAbvGr','OverallCond', 'GrLivArea', 'EnclosedPorch', 'GarageArea', 'OverallCond'	,'TotalBsmtSF',  'YearBuilt', 'SalePrice'], axis = 1)
 
 
 finaltest = testdata.filter([ 
-       'OverallQual',	'MSSubClass', 'KitchenAbvGr','GrLivArea', 'EnclosedPorch', 'GarageArea', 'OverallCond'	,'TotalBsmtSF', 'YearBuilt'], axis = 1)
+       'OverallQual',	'MSSubClass', 'KitchenAbvGr', 'OverallCond','GrLivArea', 'EnclosedPorch', 'GarageArea', 'OverallCond'	,'TotalBsmtSF',  'YearBuilt'], axis = 1)
 
 
 
@@ -59,28 +59,9 @@ missing_data = pd.concat([total, percent], axis=1, keys=['Total', 'Percent'])
 
 #Splt into predictor and variable
 xtrain = finaldata.iloc[:, :-1].values
-ytrain = finaldata.iloc[:,9].values
-xtest = finaltest.iloc[:, :9].values
+ytrain = finaldata.iloc[:,10].values
+xtest = finaltest.iloc[:, :10].values
 
-
-#Encoding categorical values in Train Dataset
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-labelencoder_x = LabelEncoder()
-xtrain[:,0] = labelencoder_x.fit_transform(xtrain[:,0])
-xtrain[:,1] = labelencoder_x.fit_transform(xtrain[:,1])
-xtrain[:,2] = labelencoder_x.fit_transform(xtrain[:,2])
-onehotencoder = OneHotEncoder(categorical_features =[0,1,2])
-xtrain=onehotencoder.fit_transform(xtrain).toarray()
-
-
-#Encoding categorical values in Test Dataset
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-labelencoder_x = LabelEncoder()
-xtest[:,0] = labelencoder_x.fit_transform(xtest[:,0])
-xtest[:,1] = labelencoder_x.fit_transform(xtest[:,1])
-xtest[:,2] = labelencoder_x.fit_transform(xtest[:,2])
-onehotencoder = OneHotEncoder(categorical_features =[0,1,2])
-xtest=onehotencoder.fit_transform(xtest).toarray()
 
 #Prediction Model
 import xgboost as xgb
